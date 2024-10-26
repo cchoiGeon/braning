@@ -18,14 +18,14 @@ export async function existNickname(req,res) {
 export async function signup(req,res){
     try{
         const {username,nickname,birth,gender,fcm} = req.body;
-        console.log(username,nickname,birth,gender,fcm);
+        console.error(username,nickname,birth,gender,fcm);
         if (!username || !nickname)
             return res.status(400).send('(username, nickname) is required.')
         
         const user = await authService.signup(username,nickname,birth,gender,fcm);
         return res.status(201).json(user)
     }catch(err){
-        console.log(err);
+        console.error(err);
         if (err.message === 'EXIST_USER') {
             return res.status(409).send('user already exists.');
         }
@@ -43,9 +43,40 @@ export async function signin(req,res){
         const user = await authService.signin(username,fcm);
 
         return res.status(200).json(user);
-    } catch (e) {
-        console.log(err);
+    } catch (err) {
+        console.error(err);
         if (err.message === 'NOT_EXIST_USER') {
+            return res.status(401).send('unauthorized.');
+        }
+        return res.status(500).send('Internal server error.');
+    }
+}
+
+export async function updateUser(req,res){
+    try {
+        const { nickname, fcm } = req.body;
+        const userId = res.locals.authed;
+
+        const user = await authService.updateUser(userId,fcm,nickname);
+
+        return res.status(200).json(user);
+    } catch (err) {
+        console.error(err);
+        if(err.message == 'NOT_EXIST_USER'){
+            return res.status(401).send('unauthorized.');
+        }
+        return res.status(500).send('Internal server error.');
+    }
+}
+
+export async function deleteUser(req,res){
+    try{
+        const userId = res.locals.authed;
+        await authService.deleteUser(userId);
+        return res.status(200).send();
+    }catch(err){
+        console.error(err);
+        if(err.message == 'NOT_EXIST_USER'){
             return res.status(401).send('unauthorized.');
         }
         return res.status(500).send('Internal server error.');

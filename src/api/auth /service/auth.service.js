@@ -8,7 +8,9 @@ export class AuthService {
 
     async existNickname(nickname){
         try{
-            const existNickname = await this.authRepository.findByUserName(nickname);
+            console.log(nickname);
+            const existNickname = await this.authRepository.findByUserNickName(nickname);
+            console.log(existNickname);
             if(existNickname){
                 return true;
             }
@@ -41,25 +43,54 @@ export class AuthService {
     }
 
     async signin(username,fcm){
-        const existUser = await this.authRepository.findByUserNameAndNotRemove(username);
-        if(!existUser){
-            throw new Error('NOT_EXIST_USER');
+        try{
+            const existUser = await this.authRepository.findByUserNameAndNotRemove(username);
+            if(!existUser){
+                throw new Error('NOT_EXIST_USER');
+            }
+    
+            let now = Date.now()
+            let diff = (now / 86400000 | 0) - (existUser.signin / 86400000 | 0)
+            existUser.fcm = fcm ?? existUser.fcm
+            existUser.consecution = diff < 2 ? existUser.consecution + diff : 1
+            existUser.signin = now
+
+            await this.authRepository.save(existUser);
+
+            existUser.token = jwt.sign({
+                authed: existUser._id,
+                birth: existUser.birth,
+            }, "12345" /* process.env 로 변경 */ , { 
+                expiresIn: '5m' 
+            });
+    
+            return existUser;
+        }catch(err){
+            throw err;
         }
+    }
 
-        let now = Date.now()
-        let diff = (now / 86400000 | 0) - (existUser.signin / 86400000 | 0)
-        existUser.fcm = req.body.fcm ?? existUser.fcm
-        existUser.consecution = diff < 2 ? existUser.consecution + diff : 1
-        existUser.signin = now
-        await existUser.save();
+    async updateUser(userId,fcm,nickname){
+        try {
+            const existUser = await this.authRepository.updateUser(userId,fcm,nickname);
+            if(!existUser){
+                throw new Error('NOT_EXIST_USER');
+            }
+            return existUser;
+        } catch (err) {
+            throw err;
+        }
+    }
 
-        existUser.token = jwt.sign({
-            authed: user._id,
-            birth,
-        }, "12345" /* process.env 로 변경 */ , { 
-            expiresIn: '5m' 
-        });
-
-        return existUser;
+    async deleteUser(userId){
+        try{
+            const existUser = await this.authRepository.deleteUser(userId);
+            if(!existUser){
+                throw new Error('NOT_EXIST_USER');
+            }
+            await this.authRepository.deleteData(userId);
+        }catch(err){
+            throw err;
+        }
     }
 }
