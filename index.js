@@ -1,6 +1,8 @@
 import express from 'express';
 import { indexRouter } from './src/route/index.js';
 import { db } from './model/index.js';
+import cached from './src/cached/cached.js';
+cached.init();
 
 const app = express();
 app.use(express.json());
