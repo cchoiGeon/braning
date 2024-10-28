@@ -13,5 +13,16 @@ const userSchema = new mongoose.Schema({
   token: { type: String },
 });
 
+userSchema.methods.toJSON = function () {
+  var obj = this.toObject()
+  delete obj.username
+  delete obj.fcm
+  delete obj.signup
+  delete obj.signin
+  delete obj.removed
+  delete obj.__v
+  return obj
+}
+
 const User = mongoose.model('User', userSchema);
 export default User;

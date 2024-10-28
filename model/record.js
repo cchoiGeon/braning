@@ -12,5 +12,13 @@ const recordSchema = new mongoose.Schema({
   incorrect: { type: Number, default: 0 },
 });
 
+recordSchema.methods.toJSON = function () {
+  var obj = this.toObject()
+  delete obj._id
+  delete obj.user
+  delete obj.__v
+  return obj
+}
+
 const Record = mongoose.model('Record', recordSchema);
 export default Record;

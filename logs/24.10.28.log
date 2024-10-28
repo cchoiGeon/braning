@@ -92,3 +92,5 @@
 2024-10-28 17:40:33 http: POST /braining/v1/game/1234 200 102 - 54.013 ms
 2024-10-28 17:40:43 info: Server is running on port 3000
 2024-10-28 17:40:46 http: POST /braining/v1/game/1234 200 102 - 55.210 ms
+2024-10-28 17:45:55 info: Server is running on port 3000
+2024-10-28 17:46:02 http: PUT /braining/v1/auth/signin 200 298 - 43.510 ms

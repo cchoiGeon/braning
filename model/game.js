@@ -6,5 +6,15 @@ const gameSchema = new mongoose.Schema({
   top: { type: Number, default: 0 },
 });
 
+gameSchema.methods.toJSON = function () {
+  var obj = this.toObject()
+  delete obj._id
+  delete obj.user
+  delete obj.code
+  delete obj.__v
+  // obj.records.forEach(e => { delete e._id })
+  return obj
+}
+
 const Game = mongoose.model('Game', gameSchema);
 export default Game;
