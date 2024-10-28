@@ -5,7 +5,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swagger/swagger.js'; 
 import { indexRouter } from './src/route/index.js';
 import { db } from './model/index.js';
-import cached from './src/cached/cached.js';
+import cached from './src/util/cached.js';
 import logger from './src/util/logging.js';
 
 cached.init();

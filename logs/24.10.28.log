@@ -63,3 +63,4 @@
 2024-10-28 13:07:11 http: GET /api-docs/swagger-ui.css 304 - - 6.161 ms
 2024-10-28 13:07:11 http: GET /api-docs/swagger-ui-bundle.js 304 - - 0.782 ms
 2024-10-28 13:07:11 http: GET /api-docs/swagger-ui-standalone-preset.js 304 - - 0.486 ms
+2024-10-28 16:26:07 info: Server is running on port 3000
