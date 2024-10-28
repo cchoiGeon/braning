@@ -58,3 +58,8 @@
 2024-10-28 13:04:59 http: POST /braining/v1/auth/signup 201 421 - 50.302 ms
 2024-10-28 13:05:12 http: PUT /braining/v1/auth/signin 200 421 - 46.266 ms
 2024-10-28 13:05:34 http: POST /braining/v1/game/10101 201 97 - 89.456 ms
+2024-10-28 13:07:06 info: Server is running on port 3000
+2024-10-28 13:07:11 http: GET /api-docs/swagger-ui-init.js 304 - - 0.685 ms
+2024-10-28 13:07:11 http: GET /api-docs/swagger-ui.css 304 - - 6.161 ms
+2024-10-28 13:07:11 http: GET /api-docs/swagger-ui-bundle.js 304 - - 0.782 ms
+2024-10-28 13:07:11 http: GET /api-docs/swagger-ui-standalone-preset.js 304 - - 0.486 ms
