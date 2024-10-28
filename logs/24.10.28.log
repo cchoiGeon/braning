@@ -1,0 +1,31 @@
+2024-10-28 10:50:24 info: Server is running on port 3000
+2024-10-28 10:51:49 info: Server is running on port 3000
+2024-10-28 10:54:08 info: Server is running on port 3000
+2024-10-28 11:02:11 info: Server is running on port 3000
+2024-10-28 11:02:45 info: Server is running on port 3001
+2024-10-28 11:02:59 info: Server is running on port 3000
+2024-10-28 11:26:16 info: Server is running on port 3000
+2024-10-28 11:27:37 info: Server is running on port 3000
+2024-10-28 11:27:41 http: POST /braining/v1/auth/signup 201 424 - 40.525 ms
+2024-10-28 11:28:45 http: POST /braining/v1/game/1234 500 22 - 80.804 ms
+2024-10-28 11:29:24 http: POST /braining/v1/game/1234 500 22 - 27.695 ms
+2024-10-28 11:54:04 info: Server is running on port 3000
+2024-10-28 11:54:42 http: PUT /braining/v1/auth/signin 200 421 - 50.722 ms
+2024-10-28 11:57:19 http: POST /braining/v1/game/1234 201 100 - 111.413 ms
+2024-10-28 11:57:45 http: POST /braining/v1/game/1234 200 101 - 82.569 ms
+2024-10-28 11:57:57 http: POST /braining/v1/game/1234 200 101 - 56.128 ms
+2024-10-28 11:58:18 http: POST /braining/v1/game/1234 200 101 - 58.739 ms
+2024-10-28 11:58:22 http: POST /braining/v1/game/1234 200 101 - 66.055 ms
+2024-10-28 12:04:16 info: Server is running on port 3000
+2024-10-28 12:04:20 http: POST /braining/v1/game/1234 200 101 - 51.884 ms
+2024-10-28 12:06:00 info: Server is running on port 3000
+2024-10-28 12:06:09 http: POST /braining/v1/game/1234 201 98 - 255.144 ms
+2024-10-28 12:07:18 info: Server is running on port 3000
+2024-10-28 12:07:27 http: POST /braining/v1/game/1234 200 98 - 63.835 ms
+2024-10-28 12:07:58 http: POST /braining/v1/game/1234 200 101 - 70.197 ms
+2024-10-28 12:08:19 http: PUT /braining/v1/auth/signin 401 13 - 16.906 ms
+2024-10-28 12:08:32 http: POST /braining/v1/auth/signup 201 425 - 101.791 ms
+2024-10-28 12:08:46 http: PUT /braining/v1/auth/signin 200 422 - 30.774 ms
+2024-10-28 12:08:59 http: POST /braining/v1/game/1234 500 22 - 54.548 ms
+2024-10-28 12:09:14 http: POST /braining/v1/game/1234 201 101 - 74.202 ms
+2024-10-28 12:09:37 http: POST /braining/v1/game/1234 200 102 - 79.938 ms

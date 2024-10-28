@@ -6,5 +6,5 @@ export const authRouter = express.Router();
 authRouter.get('/exist-nickname/:nickname',existNickname);
 authRouter.post('/signup',signup);
 authRouter.put('/signin',signin);
-authRouter.put('/',loginCheckMiddleWare,updateUser);
-authRouter.delete('/',loginCheckMiddleWare,deleteUser);
+authRouter.put('/user',loginCheckMiddleWare,updateUser);
+authRouter.delete('/user',loginCheckMiddleWare,deleteUser);

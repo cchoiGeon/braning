@@ -8,9 +8,7 @@ export class AuthService {
 
     async existNickname(nickname){
         try{
-            console.log(nickname);
             const existNickname = await this.authRepository.findByUserNickName(nickname);
-            console.log(existNickname);
             if(existNickname){
                 return true;
             }
@@ -49,11 +47,11 @@ export class AuthService {
                 throw new Error('NOT_EXIST_USER');
             }
     
-            let now = Date.now()
-            let diff = (now / 86400000 | 0) - (existUser.signin / 86400000 | 0)
+            let now = Date.now();
+            let diff = (now / 86400000 | 0) - (existUser.signin / 86400000 | 0) // 마지막으로 로그인한 날과 오늘의 차이를 일단위로 구함
             existUser.fcm = fcm ?? existUser.fcm
-            existUser.consecution = diff < 2 ? existUser.consecution + diff : 1
-            existUser.signin = now
+            existUser.consecution = diff < 2 ? existUser.consecution + diff : 1 // 마지막으로 로그인한 날과 오늘의 차이가 2일을 넘지 않는다면 연속 출석일 + 마지막으로 로그인한 날과 오늘의 차이 (만약 하루를 넘지 않는다면 +1을 하면 안되니 + diff로 함)
+            existUser.signin = now; // 마지막 로그인을 오늘로 표시 
 
             await this.authRepository.save(existUser);
 
@@ -61,7 +59,7 @@ export class AuthService {
                 authed: existUser._id,
                 birth: existUser.birth,
             }, "12345" /* process.env 로 변경 */ , { 
-                expiresIn: '5m' 
+                expiresIn: '50m' 
             });
     
             return existUser;

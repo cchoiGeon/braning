@@ -18,7 +18,6 @@ export async function existNickname(req,res) {
 export async function signup(req,res){
     try{
         const {username,nickname,birth,gender,fcm} = req.body;
-        console.error(username,nickname,birth,gender,fcm);
         if (!username || !nickname)
             return res.status(400).send('(username, nickname) is required.')
         
