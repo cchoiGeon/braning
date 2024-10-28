@@ -1,6 +1,6 @@
 import Game from "../../../../model/game.js";
 import Record from "../../../../model/record.js";
-import cached from "../../../util/cached.js"
+import cached from "../../../cached/cached.js"
 
 export async function saveGameResult(req,res){
     try{
