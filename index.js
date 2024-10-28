@@ -1,6 +1,8 @@
 import express from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './swagger/swagger.js'; 
 import { indexRouter } from './src/route/index.js';
 import { db } from './model/index.js';
 import cached from './src/cached/cached.js';
@@ -22,6 +24,8 @@ app.use(
     skip: (req, res) => req.url === '/',
   })
 );
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get('/', (req, res) => res.status(200).send());
 app.get('/braining', (req, res) => {

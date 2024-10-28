@@ -29,3 +29,32 @@
 2024-10-28 12:08:59 http: POST /braining/v1/game/1234 500 22 - 54.548 ms
 2024-10-28 12:09:14 http: POST /braining/v1/game/1234 201 101 - 74.202 ms
 2024-10-28 12:09:37 http: POST /braining/v1/game/1234 200 102 - 79.938 ms
+2024-10-28 12:56:03 info: Server is running on port 3000
+2024-10-28 12:57:55 info: Server is running on port 3000
+2024-10-28 12:58:06 http: GET //api-docs 404 148 - 10.724 ms
+2024-10-28 12:58:09 http: GET /api-docs/swagger-ui-init.js 200 10459 - 0.463 ms
+2024-10-28 12:58:09 http: GET /api-docs/swagger-ui.css 200 152071 - 11.647 ms
+2024-10-28 12:58:09 http: GET /api-docs/swagger-ui-standalone-preset.js 200 230293 - 7.291 ms
+2024-10-28 12:58:09 http: GET /api-docs/swagger-ui-bundle.js 200 1452753 - 10.864 ms
+2024-10-28 12:58:09 http: GET /api-docs/favicon-32x32.png 200 628 - 2.244 ms
+2024-10-28 12:58:14 http: GET /braining/ 200 101 - 0.667 ms
+2024-10-28 12:58:20 http: GET /braining/ 304 - - 0.733 ms
+2024-10-28 12:58:31 http: GET /braining/v1/user/exist-nickname/123 404 174 - 3.425 ms
+2024-10-28 13:01:51 info: Server is running on port 3000
+2024-10-28 13:01:56 http: GET /api-docs/swagger-ui.css 304 - - 5.406 ms
+2024-10-28 13:01:56 http: GET /api-docs/swagger-ui-bundle.js 304 - - 5.311 ms
+2024-10-28 13:01:56 http: GET /api-docs/swagger-ui-init.js 200 10464 - 0.779 ms
+2024-10-28 13:01:56 http: GET /api-docs/swagger-ui-standalone-preset.js 304 - - 0.363 ms
+2024-10-28 13:01:56 http: GET /api-docs/favicon-32x32.png 304 - - 0.927 ms
+2024-10-28 13:02:02 http: GET /braining/v1/auth/exist-nickname/%E3%85%851 200 13 - 16.297 ms
+2024-10-28 13:02:17 http: GET /braining/v1/auth/exist-nickname/r1 200 13 - 15.265 ms
+2024-10-28 13:02:57 http: POST /braining/v1/game/10101 401 63 - 0.683 ms
+2024-10-28 13:04:36 info: Server is running on port 3000
+2024-10-28 13:04:39 http: GET /api-docs/swagger-ui.css 304 - - 4.579 ms
+2024-10-28 13:04:39 http: GET /api-docs/swagger-ui-bundle.js 304 - - 4.512 ms
+2024-10-28 13:04:39 http: GET /api-docs/swagger-ui-init.js 200 10488 - 0.446 ms
+2024-10-28 13:04:39 http: GET /api-docs/swagger-ui-standalone-preset.js 304 - - 1.771 ms
+2024-10-28 13:04:39 http: GET /api-docs/favicon-32x32.png 304 - - 0.693 ms
+2024-10-28 13:04:59 http: POST /braining/v1/auth/signup 201 421 - 50.302 ms
+2024-10-28 13:05:12 http: PUT /braining/v1/auth/signin 200 421 - 46.266 ms
+2024-10-28 13:05:34 http: POST /braining/v1/game/10101 201 97 - 89.456 ms
