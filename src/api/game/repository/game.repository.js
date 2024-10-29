@@ -10,11 +10,11 @@ export class GameRepository {
         }
     }
 
-    async createRecordData(userId,date,gameCode){
+    async createRecordData(userId,todayMidnight,gameCode){
         try{
             return await Record.create({
                 user: userId,
-                date: date,
+                date: todayMidnight,
                 code: gameCode,
             });
         }catch(err){
