@@ -4,36 +4,30 @@ import User from "../../../../model/user.js"
 
 
 export class AuthRepository {
-    async createUser(username,nickname,birth,gender,fcm){
+    async createUser(signupDTO){
         try{
-            return await User.create({
-                username: username,
-                nickname: nickname.trim(),
-                birth: birth,
-                gender: gender,
-                fcm: fcm ?? undefined,
-            });
+            return await User.create({signupDTO});
         }catch(err){
             throw err;
         }
     }
     async findByUserName(username){
         try{
-            return await User.findOne({ username: username.trim() });
+            return await User.findOne({ username: username });
         }catch(err){
             throw err;
         }
     }
     async findByUserNickName(nickname){
         try{
-            return await User.findOne({ nickname: nickname.trim() });
+            return await User.findOne({ nickname: nickname });
         }catch(err){
             throw err;
         }
     }
-    async findByUserNameAndNotRemove(username){
+    async findByUserNameAndNotRemove(signinDTO){
         try{
-            return await User.findOne({ username: username.trim(), removed: null});
+            return await User.findOne({ username: signinDTO.username, removed: null});
         }catch(err){
             throw err;
         }
@@ -47,12 +41,14 @@ export class AuthRepository {
         }
     }
 
-    async updateUser(userId,nickname,fcm){
+    async updateUser(userId,updateUserDTO){
         try{
             return await User.findOneAndUpdate({ _id: userId, removed: null }, {
-                nickname: nickname ?? undefined,
-                fcm: fcm ?? undefined,
-            }, { new: true });
+                nickname: updateUserDTO.nickname,
+                fcm: updateUserDTO.fcm,
+            }, { 
+                new: true
+            });
         }catch(err){
             throw err;
         }
