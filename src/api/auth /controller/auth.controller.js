@@ -1,14 +1,18 @@
+import { nicknameSchema, signinSchema, signupSchema, updateUserSchema } from "../../../vaild/auth.vaild.js";
+import { SigninDTO, SignupDTO, UpdateUserDTO } from "../dto/auth.dto.js";
 import { AuthService } from "../service/auth.service.js";
 
 const authService = new AuthService();
 
 export async function existNickname(req,res) {
     try{
-        const {nickname} = req.params;
-        if(!nickname){
-            return res.status(400).send(' nickname is required.');
+        const { error, value } = nicknameSchema.validate(req.params);
+        if (error) {
+            return res.status(400).json({ errorMessage: error.details[0].message });
         }
-        const result = await authService.existNickname(nickname);
+        
+        const result = await authService.existNickname(value.nickname);
+
         return res.status(200).json({ res: result });
     }catch(err){
         return res.status(500).send('Internal server error.');
@@ -17,11 +21,15 @@ export async function existNickname(req,res) {
 
 export async function signup(req,res){
     try{
-        const {username,nickname,birth,gender,fcm} = req.body;
-        if (!username || !nickname)
-            return res.status(400).send('(username, nickname) is required.')
-        
-        const user = await authService.signup(username,nickname,birth,gender,fcm);
+        const { error, value } = signupSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ errorMessage: error.details[0].message });
+        }
+
+        const signupDTO = new SignupDTO(value);
+
+        const user = await authService.signup(signupDTO);
+
         return res.status(201).json(user)
     }catch(err){
         console.error(err);
@@ -35,11 +43,14 @@ export async function signup(req,res){
 
 export async function signin(req,res){
     try {
-        const {username, fcm} = req.body;
-        if (!username)
-            return res.status(400).send('(username) is required.');
-        
-        const user = await authService.signin(username,fcm);
+        const { error, value } = signinSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ errorMessage: error.details[0].message });
+        }
+
+        const signinDTO = new SigninDTO(value);
+
+        const user = await authService.signin(signinDTO);
 
         return res.status(200).json(user);
     } catch (err) {
@@ -53,11 +64,14 @@ export async function signin(req,res){
 
 export async function updateUser(req,res){
     try {
-        const { nickname, fcm } = req.body;
-        const userId = res.locals.authed;
+        const { error, value } = updateUserSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ errorMessage: error.details[0].message });
+        }
 
-        const user = await authService.updateUser(userId,fcm,nickname);
+        const updateUserDTO = new UpdateUserDTO(value);
 
+        const user = await authService.updateUser(res.locals.authed,updateUserDTO);
         return res.status(200).json(user);
     } catch (err) {
         console.error(err);

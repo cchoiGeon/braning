@@ -8,9 +8,9 @@ export async function loginCheckMiddleWare(req,res,next){
         }
         const token = authHeader.split(' ')[1];
     
-        const decoded = jwt.verify(token, "12345");
+        const decoded = jwt.verify(token, process.env.JWT);
 
-        res.locals.authed = decoded.authed;
+        res.locals.userId = decoded.userId;
         res.locals.birth = decoded.birth;
 
         next();

@@ -18,20 +18,20 @@ export class AuthService {
         }
     }
 
-    async signup(username,nickname,birth,gender,fcm){ // DTO로 변환 
+    async signup(signupDTO){ // DTO로 변환 
         try{
-            const existUser = await this.authRepository.findByUserName(username);
+            const existUser = await this.authRepository.findByUserName(signupDTO.username);
             if(existUser){
                 throw new Error('EXIST_USER');
             }
 
-            const user = await this.authRepository.createUser(username,nickname,birth,gender,fcm);
+            const user = await this.authRepository.createUser(signupDTO);
             
             user.token = jwt.sign({
-                authed: user._id,
-                birth,
-            }, "12345" /* process.env 로 변경 */ , { 
-                expiresIn: '5m' 
+                userId: user._id,
+                birth: user.birth,
+            }, process.env.JWT, { 
+                expiresIn: '50m' 
             });
 
             return user;
@@ -40,25 +40,25 @@ export class AuthService {
         }
     }
 
-    async signin(username,fcm){
+    async signin(signinDTO){
         try{
-            const existUser = await this.authRepository.findByUserNameAndNotRemove(username);
+            const existUser = await this.authRepository.findByUserNameAndNotRemove(signinDTO);
             if(!existUser){
                 throw new Error('NOT_EXIST_USER');
             }
     
             let now = Date.now();
             let diff = (now / 86400000 | 0) - (existUser.signin / 86400000 | 0) // 마지막으로 로그인한 날과 오늘의 차이를 일단위로 구함
-            existUser.fcm = fcm ?? existUser.fcm
+            existUser.fcm = signinDTO.fcm ?? existUser.fcm
             existUser.consecution = diff < 2 ? existUser.consecution + diff : 1 // 마지막으로 로그인한 날과 오늘의 차이가 2일을 넘지 않는다면 연속 출석일 + 마지막으로 로그인한 날과 오늘의 차이 (만약 하루를 넘지 않는다면 +1을 하면 안되니 + diff로 함)
             existUser.signin = now; // 마지막 로그인을 오늘로 표시 
 
             await this.authRepository.save(existUser);
 
             existUser.token = jwt.sign({
-                authed: existUser._id,
+                userId: existUser._id,
                 birth: existUser.birth,
-            }, "12345" /* process.env 로 변경 */ , { 
+            }, process.env.JWT , { 
                 expiresIn: '50m' 
             });
     
@@ -68,9 +68,9 @@ export class AuthService {
         }
     }
 
-    async updateUser(userId,fcm,nickname){
+    async updateUser(userId,updateUserDTO){
         try {
-            const existUser = await this.authRepository.updateUser(userId,fcm,nickname);
+            const existUser = await this.authRepository.updateUser(userId,updateUserDTO);
             if(!existUser){
                 throw new Error('NOT_EXIST_USER');
             }
