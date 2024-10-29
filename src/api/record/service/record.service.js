@@ -7,7 +7,9 @@ export class RecordService {
 
     async getUserRecord(userId){
         try{
-            const existData = await this.recordRepository.getRecordById(userId);
+            const EIGHTDAYS = 691200000;
+            const lastEightDays =  Date.now() - EIGHTDAYS;
+            const existData = await this.recordRepository.getRecordById(userId,lastEightDays);
             if(!existData){
                 throw new Error('NOT_EXIST_DATA');
             }

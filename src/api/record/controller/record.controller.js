@@ -4,7 +4,7 @@ const recordService = new RecordService();
 
 export async function getUserRecords(req,res){
     try {
-        const userId = res.locals.authed;
+        const { userId } = res.locals;
 
         const result = await recordService.getUserRecord(userId);
 
