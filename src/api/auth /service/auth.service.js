@@ -57,7 +57,7 @@ export class AuthService {
             existUser.consecution = calculateConsecutiveDays(lastSigninInDays, nowInDays, existUser.consecution);
     
             // 마지막 로그인 날짜 갱신
-            existUser.signin = nowDate;
+            existUser.signin = nowInDays;
             
 
             await this.authRepository.save(existUser);
