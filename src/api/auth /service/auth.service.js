@@ -1,3 +1,4 @@
+import { calculateConsecutiveDays, calculateDaysSinceEpoch } from "../../../util/day.js";
 import { AuthRepository } from "../repository/auth.repository.js"
 import jwt from 'jsonwebtoken';
 
@@ -46,12 +47,20 @@ export class AuthService {
             if(!existUser){
                 throw new Error('NOT_EXIST_USER');
             }
+
+            const nowDate = Date.now();
+            const nowInDays = calculateDaysSinceEpoch(nowDate);
+            const lastSigninInDays = calculateDaysSinceEpoch(existUser.signin);
     
-            let now = Date.now();
-            let diff = (now / 86400000 | 0) - (existUser.signin / 86400000 | 0) // 마지막으로 로그인한 날과 오늘의 차이를 일단위로 구함
-            existUser.fcm = signinDTO.fcm ?? existUser.fcm
-            existUser.consecution = diff < 2 ? existUser.consecution + diff : 1 // 마지막으로 로그인한 날과 오늘의 차이가 2일을 넘지 않는다면 연속 출석일 + 마지막으로 로그인한 날과 오늘의 차이 (만약 하루를 넘지 않는다면 +1을 하면 안되니 + diff로 함)
-            existUser.signin = now; // 마지막 로그인을 오늘로 표시 
+            // FCM 업데이트 (signinDTO에 fcm 값이 없으면 기존 fcm 유지)
+            existUser.fcm = signinDTO.fcm ?? existUser.fcm;
+    
+            // 연속 출석일 업데이트
+            existUser.consecution = calculateConsecutiveDays(lastSigninInDays, nowInDays, existUser.consecution);
+    
+            // 마지막 로그인 날짜 갱신
+            existUser.signin = nowDate;
+            
 
             await this.authRepository.save(existUser);
 
