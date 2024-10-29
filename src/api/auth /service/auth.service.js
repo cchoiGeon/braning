@@ -47,9 +47,7 @@ export class AuthService {
             if(!existUser){
                 throw new Error('NOT_EXIST_USER');
             }
-
-            const nowDate = Date.now();
-            const nowInDays = calculateDaysSinceEpoch(nowDate);
+            const nowInDays = calculateDaysSinceEpoch();
             const lastSigninInDays = calculateDaysSinceEpoch(existUser.signin);
     
             // FCM 업데이트 (signinDTO에 fcm 값이 없으면 기존 fcm 유지)
