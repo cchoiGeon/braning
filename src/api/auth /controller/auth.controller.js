@@ -1,3 +1,4 @@
+import logger from "../../../util/logging.js";
 import { signinSchema, signupSchema } from "../../../vaild/auth.vaild.js";
 import { SigninDTO, SignupDTO } from "../dto/auth.dto.js";
 import { AuthService } from "../service/auth.service.js";
@@ -17,7 +18,7 @@ export async function signup(req,res){
 
         return res.status(201).json(user)
     }catch(err){
-        console.error(err);
+        logger.warn("Auth/Signup Error : ",err);
         if (err.message === 'EXIST_USER') {
             return res.status(409).send('user already exists.');
         }
@@ -39,7 +40,7 @@ export async function signin(req,res){
 
         return res.status(200).json(user);
     } catch (err) {
-        console.error(err);
+        logger.warn("Auth/Signin Error : ",err);
         if (err.message === 'NOT_EXIST_USER') {
             return res.status(401).send('unauthorized.');
         }

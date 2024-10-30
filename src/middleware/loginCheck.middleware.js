@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import logger from "../util/logging";
 
 export async function loginCheckMiddleWare(req,res,next){
     try{
@@ -15,7 +16,7 @@ export async function loginCheckMiddleWare(req,res,next){
 
         next();
     }catch(err){
-        console.error(err);
+        logger.warn("MiddleWare/LoginCheck Error : ",err);
         return res.status(500).send('Internal server error.');
     }
 }
