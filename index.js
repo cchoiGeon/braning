@@ -36,5 +36,9 @@ app.get('/braining', (req, res) => {
     });
 });
 app.use('/braining/v1', indexRouter);  // 라우트 파일 사용
-
+app.use((req, res, next) => { // 정의되지 않은 라우트에 대한 에러 처리 (404 처리)
+  return res.status(404).json({
+    error: "NotFound"
+  })
+});
 app.listen(PORT, () => logger.info(`Server is running on port ${PORT}`));
