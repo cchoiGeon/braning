@@ -1,32 +1,19 @@
-import { calculateConsecutiveDays, calculateDaysSinceEpoch } from "../../../util/day.js";
-import { AuthRepository } from "../repository/auth.repository.js"
 import jwt from 'jsonwebtoken';
+import { UserService } from "../../user/service/user.service.js";
+import { calculateConsecutiveDays, calculateDaysSinceEpoch } from "../../../util/day.js";
 
 export class AuthService {
     constructor(){
-        this.authRepository = new AuthRepository();
+        this.userService = new UserService();
     }
-
-    async existNickname(nickname){
-        try{
-            const existNickname = await this.authRepository.findByUserNickName(nickname);
-            if(existNickname){
-                return true;
-            }
-            return false;
-        }catch(err){
-            throw err; 
-        }
-    }
-
     async signup(signupDTO){ // DTO로 변환 
         try{
-            const existUser = await this.authRepository.findByUserName(signupDTO.username);
+            const existUser = await this.userService.findUserByUserName(signupDTO.username);
             if(existUser){
                 throw new Error('EXIST_USER');
             }
 
-            const user = await this.authRepository.createUser(signupDTO);
+            const user = await this.userService.createUser(signupDTO);
             
             user.token = jwt.sign({
                 userId: user._id,
@@ -43,7 +30,7 @@ export class AuthService {
 
     async signin(signinDTO){
         try{
-            const existUser = await this.authRepository.findByUserNameAndNotRemove(signinDTO);
+            const existUser = await this.userService.findUserByNameAndNotRemove(signinDTO);
             if(!existUser){
                 throw new Error('NOT_EXIST_USER');
             }
@@ -60,7 +47,7 @@ export class AuthService {
             existUser.signin = nowInDays;
             
 
-            await this.authRepository.save(existUser);
+            await this.userService.saveUser(existUser);
 
             existUser.token = jwt.sign({
                 userId: existUser._id,
@@ -70,30 +57,6 @@ export class AuthService {
             });
     
             return existUser;
-        }catch(err){
-            throw err;
-        }
-    }
-
-    async updateUser(userId,updateUserDTO){
-        try {
-            const existUser = await this.authRepository.updateUser(userId,updateUserDTO);
-            if(!existUser){
-                throw new Error('NOT_EXIST_USER');
-            }
-            return existUser;
-        } catch (err) {
-            throw err;
-        }
-    }
-
-    async deleteUser(userId){
-        try{
-            const existUser = await this.authRepository.deleteUser(userId);
-            if(!existUser){
-                throw new Error('NOT_EXIST_USER');
-            }
-            await this.authRepository.deleteData(userId);
         }catch(err){
             throw err;
         }

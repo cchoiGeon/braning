@@ -3,7 +3,7 @@ import Record from "../../../../model/record.js";
 import User from "../../../../model/user.js"
 
 
-export class AuthRepository {
+export class UserRepository {
     async createUser(signupDTO){
         try{
             return await User.create({signupDTO});
@@ -11,21 +11,21 @@ export class AuthRepository {
             throw err;
         }
     }
-    async findByUserName(username){
+    async findUserByUserName(username){
         try{
             return await User.findOne({ username: username });
         }catch(err){
             throw err;
         }
     }
-    async findByUserNickName(nickname){
+    async findUserByNickName(nickname){
         try{
             return await User.findOne({ nickname: nickname });
         }catch(err){
             throw err;
         }
     }
-    async findByUserNameAndNotRemove(signinDTO){
+    async findUserByNameAndNotRemove(signinDTO){
         try{
             return await User.findOne({ username: signinDTO.username, removed: null});
         }catch(err){
@@ -33,7 +33,7 @@ export class AuthRepository {
         }
     }
 
-    async save(user){
+    async saveUser(user){
         try{
             await user.save();
         }catch(err){

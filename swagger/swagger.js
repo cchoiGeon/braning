@@ -27,36 +27,6 @@ const swaggerSpec = swaggerJSDoc({
           }
         },
       },
-      '/v1/auth/exist-nickname/{nickname}': {
-        get: {
-          tags: ['auth'],
-          parameters: [
-            {
-              in: 'path',
-              name: 'nickname',
-              schema: {
-                type: 'string'
-              },
-              required: true
-            }
-          ],
-          responses: {
-            200: {
-              content: {
-                'application/json': {
-                  schema: {
-                    properties: {
-                      res: {
-                        type: 'boolean'
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-      },
       '/v1/auth/signup': {
         post: {
           tags: ['auth'],
@@ -114,9 +84,39 @@ const swaggerSpec = swaggerJSDoc({
           }
         },
       },
-      '/v1/auth/user': {
+      '/v1/user/exist-nickname/{nickname}': {
+        get: {
+          tags: ['user'],
+          parameters: [
+            {
+              in: 'path',
+              name: 'nickname',
+              schema: {
+                type: 'string'
+              },
+              required: true
+            }
+          ],
+          responses: {
+            200: {
+              content: {
+                'application/json': {
+                  schema: {
+                    properties: {
+                      res: {
+                        type: 'boolean'
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+      },
+      '/v1/user': {
         put: {
-          tags: ['auth'],
+          tags: ['user'],
           security: [{ bearerAuth: [] }],
           requestBody: {
             content: {
@@ -140,7 +140,7 @@ const swaggerSpec = swaggerJSDoc({
           }
         },
         delete: {
-          tags: ['auth'],
+          tags: ['user'],
           security: [{ bearerAuth: [] }],
           responses: {
             200: {
