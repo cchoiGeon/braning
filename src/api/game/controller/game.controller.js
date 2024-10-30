@@ -1,3 +1,4 @@
+import logger from "../../../util/logging.js";
 import { gameCodeSchema, saveGameDataSchema } from "../../../vaild/game.vaild.js";
 import { GetTopDataDTO, SaveGameDataDTO, SaveRecordDataDTO } from "../dto/game.dto.js";
 import { GameService } from "../service/game.service.js";
@@ -47,7 +48,7 @@ export async function saveGameResult(req,res){
         
         return res.status(200).json(game);
     }catch(err){
-        console.error(err);
+        logger.warn("Game/SaveGameResult Error : ",err);
         return res.status(500).send('Internal server error.');
     }
 }
