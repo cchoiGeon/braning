@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import logger from "../util/logging";
+import logger from "../util/logging.js";
 
 export async function loginCheckMiddleWare(req,res,next){
     try{

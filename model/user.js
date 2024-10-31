@@ -7,6 +7,8 @@ const userSchema = new mongoose.Schema({
   gender: { type: Number, enum: [1, 2] },
   consecution: { type: Number, default: 1 },
   fcm: { type: String, default: null },
+  crews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Crew' }], // 가입한 크루 목록
+  createdCrews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Crew' }], // 생성한 크루 목록
   signup: { type: Date, default: Date.now },
   signin: { type: Date, default: Date.now },
   removed: { type: Date, default: null },
